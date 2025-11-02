@@ -8,10 +8,12 @@ export default function SeatSelection({ sessionId, baseApi, onSeatsSelected }) {
   const [grid, setGrid] = useState({ seats: [], rows: 0, cols: 0 });
   const [selected, setSelected] = useState([]);
   const [message, setMessage] = useState("");
+
   useEffect(() => {
     if (sessionId) {
       if (CONFIG.USE_MOCK_DATA) {
-        setGrid(mockData.seats);
+        const gridData = mockData.generateSeats(sessionId);
+        setGrid(gridData || { seats: [], rows: 0, cols: 0 });
         setSelected([]);
       } else {
         axios
@@ -77,16 +79,27 @@ export default function SeatSelection({ sessionId, baseApi, onSeatsSelected }) {
       {message && <div className="message">{message}</div>}
 
       <div className="theater-container">
-        <div className="screen-container">
-          <div className="screen"></div>
+        <div
+          className={grid.hasScreen ? "screen-container" : "stage-container"}
+        >
+          <div className={grid.hasScreen ? "screen" : "stage"}>
+            {!grid.hasScreen && "STAGE"}
+          </div>
         </div>
         <div className="grid-seats">
           {rows.map((r) => (
             <div key={r} className="seat-row">
               <span className="row-number">Row {r}</span>
               {cols.map((c) => {
+                // Проверяем, является ли текущая позиция проходом
+                if (grid.aisleAfterCols && grid.aisleAfterCols.includes(c)) {
+                  return <div key={`aisle-${r}-${c}`} className="aisle" />;
+                }
+
                 const s = grid.seats.find((x) => x.row === r && x.col === c);
-                if (!s) return <div key={c} className="seat empty" />;
+                if (!s)
+                  return <div key={`empty-${r}-${c}`} className="seat empty" />;
+
                 return (
                   <div
                     key={s.id}

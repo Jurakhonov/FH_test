@@ -139,22 +139,94 @@ export const mockData = {
       is_sold_out: false,
     },
   ],
-  seats: {
-    rows: 5,
-    cols: 10,
-    seats: Array.from({ length: 50 }, (_, index) => ({
-      id: index + 1,
-      row: Math.floor(index / 10) + 1,
-      col: (index % 10) + 1,
-      type:
-        index < 20
-          ? "econom"
-          : index < 35
-          ? "standard"
-          : index < 45
-          ? "premium"
-          : "vip",
-      reserved: Math.random() > 0.8,
-    })),
+  // Конфигурации залов для разных типов событий
+  venueLayouts: {
+    cinema: {
+      rows: 5,
+      cols: 10,
+      hasScreen: true,
+      aisleAfterCols: [5], // проход после 5-го места
+      seatTypes: [
+        { rows: [1, 2], type: "econom" },
+        { rows: [3, 4], type: "standard" },
+        { rows: [5], type: "premium" },
+      ],
+    },
+    theater: {
+      rows: 8,
+      cols: 15,
+      hasStage: true,
+      aisleAfterCols: [5, 10], // проходы после 5-го и 10-го места
+      seatTypes: [
+        { rows: [1, 2, 3], type: "econom" },
+        { rows: [4, 5, 6], type: "standard" },
+        { rows: [7, 8], type: "premium" },
+      ],
+    },
+    concert: {
+      rows: 12,
+      cols: 20,
+      hasStage: true,
+      aisleAfterCols: [7, 14], // проходы после 7-го и 14-го места
+      seatTypes: [
+        { rows: [1, 2, 3, 4], type: "econom" },
+        { rows: [5, 6, 7, 8], type: "standard" },
+        { rows: [9, 10], type: "premium" },
+        { rows: [11, 12], type: "vip" },
+      ],
+    },
+  },
+
+  // Функция для генерации мест на основе макета
+  generateSeats: function (sessionId) {
+    const session = this.sessions.find((s) => s.id === sessionId);
+    if (!session) return null;
+
+    // Определяем тип площадки на основе категории события
+    const event = this.events.find((e) => e.id === session.event.id);
+    let venueType = "cinema"; // по умолчанию
+    if (event.category === 2) venueType = "concert";
+    if (event.category === 3) venueType = "theater";
+
+    const layout = this.venueLayouts[venueType];
+    const totalSeats = layout.rows * layout.cols;
+    const reservedCount = totalSeats - session.available_seats;
+
+    let seats = [];
+    let seatId = 1;
+
+    for (let row = 1; row <= layout.rows; row++) {
+      for (let col = 1; col <= layout.cols; col++) {
+        // Пропускаем места в проходах
+        if (layout.aisleAfterCols.includes(col)) continue;
+
+        // Определяем тип места
+        let type = "standard";
+        for (const seatType of layout.seatTypes) {
+          if (seatType.rows.includes(row)) {
+            type = seatType.type;
+            break;
+          }
+        }
+
+        seats.push({
+          id: seatId++,
+          row,
+          col,
+          type,
+          // Резервируем места равномерно по залу
+          reserved: seatId <= reservedCount,
+        });
+      }
+    }
+
+    return {
+      rows: layout.rows,
+      cols: layout.cols,
+      hasScreen: layout.hasScreen,
+      hasStage: layout.hasStage,
+      aisleAfterCols: layout.aisleAfterCols,
+      seats,
+    };
   },
 };
