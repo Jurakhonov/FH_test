@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SessionList.css";
+import { mockData } from "../mockData";
 
 export default function SessionList({ event, onSelect }) {
   const [sessions, setSessions] = useState([]);

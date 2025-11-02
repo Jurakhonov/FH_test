@@ -5,7 +5,10 @@ import EventList from "./components/EventList";
 import SessionList from "./components/SessionList";
 import SeatSelection from "./components/SeatSelection";
 import PaymentFlow from "./components/PaymentFlow";
+import { mockData } from "./mockData";
 
+// В продакшене будем использовать реальный API
+const USE_MOCK_DATA = true;
 const API = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
 
 export default function App() {
@@ -18,8 +21,13 @@ export default function App() {
   const [showPayment, setShowPayment] = useState(false);
 
   useEffect(() => {
-    axios.get(API + "/categories/").then((r) => setCategories(r.data));
-    axios.get(API + "/events/").then((r) => setEvents(r.data));
+    if (USE_MOCK_DATA) {
+      setCategories(mockData.categories);
+      setEvents(mockData.events);
+    } else {
+      axios.get(API + "/categories/").then((r) => setCategories(r.data));
+      axios.get(API + "/events/").then((r) => setEvents(r.data));
+    }
   }, []);
 
   return (
