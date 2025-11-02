@@ -92,7 +92,7 @@ export const mockData = {
     seats: Array.from({ length: 50 }, (_, index) => ({
       id: index + 1,
       row: Math.floor(index / 10) + 1,
-      number: (index % 10) + 1,
+      col: (index % 10) + 1,
       type:
         index < 20
           ? "econom"

@@ -10,7 +10,7 @@ export default function SeatSelection({ sessionId, baseApi, onSeatsSelected }) {
   const [message, setMessage] = useState("");
   useEffect(() => {
     if (sessionId) {
-      if (window.USE_MOCK_DATA) {
+      if (CONFIG.USE_MOCK_DATA) {
         setGrid(mockData.seats);
         setSelected([]);
       } else {
