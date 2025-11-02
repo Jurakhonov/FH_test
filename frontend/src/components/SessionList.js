@@ -18,7 +18,7 @@ export default function SessionList({ event, onSelect }) {
     setLoading(true);
 
     if (CONFIG.USE_MOCK_DATA) {
-      const data = mockData.sessions.filter(s => s.event.id === event.id);
+      const data = mockData.sessions.filter((s) => s.event.id === event.id);
       setSessions(data);
       setLoading(false);
     } else {
@@ -38,8 +38,14 @@ export default function SessionList({ event, onSelect }) {
 
     // Применяем фильтр по доступности
     if (filterSoldOut) {
-      filteredSessions = filteredSessions.filter((s) => !s.is_sold_out);
+      filteredSessions = filteredSessions.filter((s) => s.available_seats > 0);
     }
+
+    // Обновляем статус sold out
+    filteredSessions = filteredSessions.map((session) => ({
+      ...session,
+      is_sold_out: session.available_seats === 0,
+    }));
 
     // Применяем сортировку
     return filteredSessions.sort((a, b) => {

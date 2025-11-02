@@ -1,14 +1,15 @@
 import React from "react";
 
 export default function EventList({ events, category, onSelect, selected }) {
-  const filtered = category
-    ? events.filter((e) => {
-        // handle backend returning category as object or id or null
-        if (!e.category) return false;
-        if (typeof e.category === "object") return e.category.id === category;
-        return Number(e.category) === Number(category);
-      })
-    : events;
+  const filtered =
+    !category || category === "all"
+      ? events
+      : events.filter((e) => {
+          if (!e.category) return false;
+          if (typeof e.category === "object")
+            return e.category.id === Number(category);
+          return Number(e.category) === Number(category);
+        });
   return (
     <div className="card">
       <h3>Events</h3>

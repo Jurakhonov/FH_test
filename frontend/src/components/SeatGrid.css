@@ -1,0 +1,76 @@
+.grid-seats {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  justify-content: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-seats {
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .seat {
+    width: 25px;
+    height: 25px;
+    font-size: 10px;
+  }
+
+  .row-number {
+    font-size: 10px;
+    min-width: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .legend > div {
+    margin: 5px 0;
+  }
+
+  .pay-button {
+    width: 100%;
+    padding: 10px !important;
+  }
+
+  .seat-selection-card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.theater-container {
+  position: relative;
+  padding: 40px 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.screen-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.screen {
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  margin: 0 auto;
+  width: 80%;
+  border-radius: 50%;
+  position: relative;
+}

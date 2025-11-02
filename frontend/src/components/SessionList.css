@@ -46,6 +46,21 @@
   opacity: 0.6;
   cursor: not-allowed;
   background-color: #f7fafc;
+  position: relative;
+}
+
+.sold-out::after {
+  content: "SOLD OUT";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  background-color: #e53e3e;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  pointer-events: none;
 }
 
 .session-controls {
