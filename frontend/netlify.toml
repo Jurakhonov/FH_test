@@ -1,0 +1,7 @@
+[build]
+  publish = "build"
+  command = "npm run build"
+
+[context.production.environment]
+  # Set the backend API base URL for production builds. Update this in Netlify UI when connecting the repo.
+  REACT_APP_API_URL = "https://your-backend.example.com/api"

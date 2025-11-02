@@ -1,0 +1,117 @@
+.sessions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.session-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.session-item:hover:not(.sold-out) {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.session-time {
+  font-weight: 500;
+  color: #333;
+}
+
+.session-info {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.price {
+  font-weight: bold;
+  color: #2c5282;
+}
+
+.availability {
+  color: #4a5568;
+}
+
+.sold-out {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f7fafc;
+}
+
+.session-controls {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sorting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-select {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.filtering {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.limited-seats {
+  border-color: #ed8936;
+}
+
+.limited-text {
+  color: #c05621;
+  font-weight: bold;
+}
+
+.sold-out-text {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+.sold-out .availability {
+  color: #e53e3e;
+  font-weight: 500;
+}
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #718096;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #2d3748;
+}
