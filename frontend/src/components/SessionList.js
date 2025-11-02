@@ -25,11 +25,12 @@ export default function SessionList({ event, onSelect }) {
       axios
         .get(`${CONFIG.API_URL}/sessions/?event=${event.id || ""}`)
         .then((r) => {
-        const data = r.data.filter((s) => s.event && s.event.id === event.id);
-        setSessions(data);
-      })
-      .catch((error) => console.error("Error loading sessions:", error))
-      .finally(() => setLoading(false));
+          const data = r.data.filter((s) => s.event && s.event.id === event.id);
+          setSessions(data);
+        })
+        .catch((error) => console.error("Error loading sessions:", error))
+        .finally(() => setLoading(false));
+    }
   }, [event]);
 
   const getSortedAndFilteredSessions = () => {
