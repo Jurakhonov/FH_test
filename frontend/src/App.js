@@ -51,7 +51,7 @@ export default function App() {
           {selectedSession && !showPayment && (
             <SeatSelection
               sessionId={selectedSession.id}
-              baseApi={API}
+              baseApi={CONFIG.API_URL}
               onSeatsSelected={(seats) => {
                 setSelectedSeats(seats);
                 setShowPayment(true);

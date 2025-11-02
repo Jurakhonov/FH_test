@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SessionList.css";
 import { mockData } from "../mockData";
+import { CONFIG } from "../config";
 
 export default function SessionList({ event, onSelect }) {
   const [sessions, setSessions] = useState([]);
@@ -15,9 +16,15 @@ export default function SessionList({ event, onSelect }) {
       return;
     }
     setLoading(true);
-    axios
-      .get("http://localhost:8000/api/sessions/?event=" + (event.id || ""))
-      .then((r) => {
+
+    if (CONFIG.USE_MOCK_DATA) {
+      const data = mockData.sessions.filter(s => s.event.id === event.id);
+      setSessions(data);
+      setLoading(false);
+    } else {
+      axios
+        .get(`${CONFIG.API_URL}/sessions/?event=${event.id || ""}`)
+        .then((r) => {
         const data = r.data.filter((s) => s.event && s.event.id === event.id);
         setSessions(data);
       })

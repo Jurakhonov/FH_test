@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SeatSelection.css";
 import { mockData } from "../mockData";
+import { CONFIG } from "../config";
 
 export default function SeatSelection({ sessionId, baseApi, onSeatsSelected }) {
   const [grid, setGrid] = useState({ seats: [], rows: 0, cols: 0 });
