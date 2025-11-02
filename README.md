@@ -25,14 +25,3 @@ cd "c:\Users\HP\Desktop\тест вок\booking_project\frontend"
 npm install
 npm start
 ```
-
-Notes on Payme
-
-- This project uses a mock Payme flow (POST /api/pay/) that simulates
-  success/failure. Replace with real integration when ready.
-
-Next steps for deployment
-
-- For backend, consider deploying to Render/Heroku/ Railway (free tiers
-  available) and enable a proper Payme callback URL.
-- For frontend, build and host on Vercel/Netlify.
