@@ -9,11 +9,16 @@ export default function SeatSelection({ sessionId, baseApi, onSeatsSelected }) {
   const [message, setMessage] = useState("");
   useEffect(() => {
     if (sessionId) {
-      axios
-        .get(`${baseApi}/sessions/${sessionId}/seats/`)
-        .then((r) => setGrid(r.data))
-        .catch(() => setGrid({ seats: [], rows: 0, cols: 0 }));
-      setSelected([]);
+      if (window.USE_MOCK_DATA) {
+        setGrid(mockData.seats);
+        setSelected([]);
+      } else {
+        axios
+          .get(`${baseApi}/sessions/${sessionId}/seats/`)
+          .then((r) => setGrid(r.data))
+          .catch(() => setGrid({ seats: [], rows: 0, cols: 0 }));
+        setSelected([]);
+      }
     }
   }, [sessionId, baseApi]);
 
